@@ -57,6 +57,12 @@ add_executable_simple(throw_class2
 add_executable_simple(throw_integer
     throw_integer.cxx)
 
+add_executable_simple(std_terminate
+    std_terminate.cxx)
+
+add_executable_simple(gctr_fail
+    gctr_fail.cxx)
+
 # logic_error
 # logic_error > future_error
 # domain_error
