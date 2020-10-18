@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 function(add_executable_simple tgt)
     set(srcs ${ARGN})
     add_executable(${tgt} ${srcs})
+    string(REPLACE "_" "" tgtname ${tgt})
     if(${CMAKE_SYSTEM_NAME} STREQUAL "iOS")
         set_target_properties(${tgt}
             PROPERTIES 
@@ -14,7 +15,15 @@ function(add_executable_simple tgt)
             MACOSX_BUNDLE_SHORT_VERSION_STRING
             0
             MACOSX_BUNDLE_GUI_IDENTIFIER
-            org.cltn.temp.${tgt})
+            org.cltn.temp.${tgtname})
+    endif()
+endfunction()
+
+function(warn_for_ios)
+    if(${CMAKE_SYSTEM_NAME} STREQUAL "iOS")
+        if(NOT CMAKE_XCODE_ATTRIBUTE_DEVELOPMENT_TEAM)
+            message(STATUS "CMAKE_XCODE_ATTRIBUTE_DEVELOPMENT_TEAM not set!")
+        endif()
     endif()
 endfunction()
 
@@ -80,3 +89,5 @@ add_executable_simple(gctr_fail
 # range_error
 # overflow_error
 # undeflow_error
+
+warn_for_ios()
