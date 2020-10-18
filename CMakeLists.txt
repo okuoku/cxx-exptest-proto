@@ -3,40 +3,58 @@ project(exptest CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(exptest
+function(add_executable_simple tgt)
+    set(srcs ${ARGN})
+    add_executable(${tgt} ${srcs})
+    if(${CMAKE_SYSTEM_NAME} STREQUAL "iOS")
+        set_target_properties(${tgt}
+            PROPERTIES 
+            MACOSX_BUNDLE_BUNDLE_VERSION 
+            0.0.0
+            MACOSX_BUNDLE_SHORT_VERSION_STRING
+            0
+            MACOSX_BUNDLE_GUI_IDENTIFIER
+            org.cltn.temp.${tgt})
+    endif()
+endfunction()
+
+add_executable_simple(exptest
     exptest.cxx)
-add_executable(bad_alloc_replace
+
+add_executable_simple(bad_alloc_replace
     bad_alloc_replace.cxx)
-add_executable(bad_alloc_noreplace
+
+add_executable_simple(bad_alloc_noreplace
     bad_alloc_noreplace.cxx)
 
-add_executable(bad_optional_access
+add_executable_simple(bad_optional_access
     bad_optional_access.cxx)
-add_executable(bad_variant_access
+
+add_executable_simple(bad_variant_access
     bad_variant_access.cxx)
 
-add_executable(bad_cast
+add_executable_simple(bad_cast
     bad_cast.cxx)
 
-add_executable(bad_typeid
+add_executable_simple(bad_typeid
     bad_typeid.cxx)
 
-add_executable(bad_function_call
+add_executable_simple(bad_function_call
     bad_function_call.cxx)
 
-add_executable(bad_weak_ptr
+add_executable_simple(bad_weak_ptr
     bad_weak_ptr.cxx)
 
-add_executable(bad_any_cast
+add_executable_simple(bad_any_cast
     bad_any_cast.cxx)
 
-add_executable(throw_class
+add_executable_simple(throw_class
     throw_class.cxx)
 
-add_executable(throw_class2
+add_executable_simple(throw_class2
     throw_class2.cxx)
 
-add_executable(throw_integer
+add_executable_simple(throw_integer
     throw_integer.cxx)
 
 # logic_error
